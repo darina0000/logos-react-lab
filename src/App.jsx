@@ -1,7 +1,9 @@
-function App() {
+import Header from './components/Header'
+
+const App = () => {
   return (
-    <div>
-      <h1>1 лаборторная работа</h1>
+    <div className="reference-home">
+      <Header />
     </div>
   )
 }
