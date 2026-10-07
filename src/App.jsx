@@ -6,6 +6,8 @@ import Courses from './components/Courses'
 import Useful from './components/Useful'
 import Teachers from './components/Teachers'
 import Reviews from './components/Reviews'
+import Callout from './components/Callout'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
       <Useful />
       <Teachers />
       <Reviews />
+      <Callout />
+      <Footer />
     </div>
   )
 }
