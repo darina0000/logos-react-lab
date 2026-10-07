@@ -5,6 +5,7 @@ import Parents from './components/Parents'
 import Courses from './components/Courses'
 import Useful from './components/Useful'
 import Teachers from './components/Teachers'
+import Reviews from './components/Reviews'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Courses />
       <Useful />
       <Teachers />
+      <Reviews />
     </div>
   )
 }
