@@ -1,9 +1,9 @@
-const Header = () => {
+const Header = ({ orgName }) => {
   return (
     <header className="ref-header">
       <div className="ref-container ref-header__inner">
         <a className="ref-logo" href="index.html">
-          <img src="/images/logo.png" alt="Центр Логос" />
+        <img src="/images/logo.png" alt={orgName} />
         </a>
 
         <button className="burger" type="button" aria-label="Открыть меню">

@@ -8,20 +8,21 @@ import Teachers from './components/Teachers'
 import Reviews from './components/Reviews'
 import Callout from './components/Callout'
 import Footer from './components/Footer'
+import { orgName, pageTitle, courses, stats } from './data'
 
 const App = () => {
   return (
     <div className="reference-home">
-      <Header />
-      <Hero />
-      <Stats />
+      <Header orgName={orgName} />
+      <Hero title={pageTitle} />
+      <Stats orgName={orgName} stats={stats} />
       <Parents />
-      <Courses />
+      <Courses courses={courses} />
       <Useful />
       <Teachers />
       <Reviews />
       <Callout />
-      <Footer />
+      <Footer orgName={orgName} />
     </div>
   )
 }

@@ -1,11 +1,9 @@
-const Hero = () => {
+const Hero = ({ title }) => {
   return (
     <section className="ref-hero">
-      <div className="ref-container">
-        <div className="ref-hero__inner">
-                    
-          <div className="ref-hero__content">
-            <h1>Подготовка к ЦТ</h1>
+      <div className="ref-container ref-hero__inner">
+        <div className="ref-hero__content">
+            <h1>{title}</h1>
                        
             <div className="ref-features">
               <div className="ref-feature ref-feature--score">
@@ -41,7 +39,6 @@ const Hero = () => {
           </div>
           
         </div>
-      </div>
     </section>
   )
 }

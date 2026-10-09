@@ -1,10 +1,9 @@
-const Footer = () => {
+const Footer = ({ orgName }) => {
   return (
     <footer className="ref-footer">
       <div className="ref-container">
-        
         <a className="ref-logo" href="index.html">
-          <img src="/images/logo.png" alt="Центр Логос" />
+          <img src="/images/logo.png" alt={orgName} />
         </a>
 
         <nav>
