@@ -62,3 +62,111 @@ export const reviews = [
     full: 'Интенсив по русскому языку помог быстро закрыть пробелы перед тестированием. Разобрали сложные случаи, пунктуацию и типовые ловушки, стало гораздо спокойнее идти на экзамен. Преподаватель всегда был на связи и отвечал на вопросы.'
   }
 ];
+// Данные преподавателей для страницы /teachers
+export const teachers = [
+  {
+    id: 1,
+    surname: 'ВОЛКОВА',
+    name: 'Галина Семеновна',
+    subject: 'Физика',
+    experience: '15',
+    center: '8',
+    educationYears: '43',
+    educationUnit: 'года',
+    educationText: 'закончила аспирантуру',
+    image: '/images/home-teacher.png',
+    achievements: [
+      { icon: '/images/vector-teacher.png', text: 'Эксперт ЦТ по физике с 2012 года' },
+      { icon: '/images/vector-teacher2.png', text: 'Разработчик учебно-методических материалов "Центра Логос"' },
+      { icon: '/images/vector-teacher3.png', text: 'Почётная грамота от министерства образования РФ' }
+    ],
+    results: [
+      { value: '+700', text: 'старшеклассников подготовила к сдаче экзамена' },
+      { value: '98', text: 'максимальный балл учеников на ЕГЭ' }
+    ]
+  },
+  {
+    id: 2,
+    surname: 'ИВАНОВА',
+    name: 'Марина Петровна',
+    subject: 'Математика',
+    experience: '12',
+    center: '6',
+    educationYears: '38',
+    educationUnit: 'лет',
+    educationText: 'преподаёт математику',
+    image: '/images/home-teacher2.png',
+    achievements: [
+      { icon: '/images/vector-teacher.png', text: 'Эксперт по заданиям повышенной сложности' },
+      { icon: '/images/vector-teacher2.png', text: 'Автор тренажёров по алгебре и геометрии' },
+      { icon: '/images/vector-teacher3.png', text: 'Куратор олимпиадной подготовки' }
+    ],
+    results: [
+      { value: '+520', text: 'учеников успешно сдали экзамен' },
+      { value: '96', text: 'максимальный балл учеников' }
+    ]
+  },
+  {
+    id: 3,
+    surname: 'КОВАЛЕВА',
+    name: 'Ольга Викторовна',
+    subject: 'Русский язык',
+    experience: '10',
+    center: '5',
+    educationYears: '29',
+    educationUnit: 'лет',
+    educationText: 'в филологическом образовании',
+    image: '/images/home-teacher3.png',
+    achievements: [
+      { icon: '/images/vector-teacher.png', text: 'Эксперт по сочинениям и тестовой части' },
+      { icon: '/images/vector-teacher2.png', text: 'Методист по развитию грамотной речи' },
+      { icon: '/images/vector-teacher3.png', text: 'Автор проверочных диктантов' }
+    ],
+    results: [
+      { value: '+430', text: 'выпускников улучшили результат' },
+      { value: '94', text: 'максимальный балл учеников' }
+    ]
+  },
+  {
+    id: 4,
+    surname: 'СОКОЛОВА',
+    name: 'Елена Андреевна',
+    subject: 'Английский язык',
+    experience: '11',
+    center: '7',
+    educationYears: '31',
+    educationUnit: 'год',
+    educationText: 'в языковой подготовке',
+    image: '/images/home-teacher4.png',
+    achievements: [
+      { icon: '/images/vector-teacher.png', text: 'Специалист по международным экзаменам' },
+      { icon: '/images/vector-teacher2.png', text: 'Ведёт разговорные клубы' },
+      { icon: '/images/vector-teacher3.png', text: 'Разработчик тестовых модулей' }
+    ],
+    results: [
+      { value: '+460', text: 'учеников прошли подготовку' },
+      { value: '95', text: 'максимальный балл учеников' }
+    ]
+  },
+  {
+    id: 5,
+    surname: 'МИХАЙЛОВА',
+    name: 'Наталья Игоревна',
+    subject: 'Химия',
+    experience: '14',
+    center: '9',
+    educationYears: '35',
+    educationUnit: 'лет',
+    educationText: 'работает с выпускниками',
+    image: '/images/home-teacher5.png',
+    achievements: [
+      { icon: '/images/vector-teacher.png', text: 'Эксперт по расчётным задачам' },
+      { icon: '/images/vector-teacher2.png', text: 'Автор практических занятий' },
+      { icon: '/images/vector-teacher3.png', text: 'Наставник проектных работ' }
+    ],
+    results: [
+      { value: '+390', text: 'учеников подготовила к экзамену' },
+      { value: '97', text: 'максимальный балл учеников' }
+    ]
+  }
+];

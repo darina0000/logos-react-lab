@@ -15,7 +15,7 @@ const Header = ({ orgName }) => {
         <nav className="site-nav ref-nav">
           <a href="#about">О центре</a>
           <Link to="/courses">Курсы</Link>
-          <a href="#teachers">Преподаватели</a>
+          <Link to="/teachers">Преподаватели</Link>
           <a href="#reviews">Результаты</a>
           <a href="contacts.html">Контакты</a>
         </nav>
