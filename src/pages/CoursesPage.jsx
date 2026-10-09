@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([])
-  const [filteredCourses, setFilteredCourses] = useState([])
   const [favorites, setFavorites] = useState([])
   const [search, setSearch] = useState('')
   const [format, setFormat] = useState('any')
@@ -28,15 +27,12 @@ const CoursesPage = () => {
   useEffect(() => {
     fetch('/data/db.json')
       .then(res => res.json())
-      .then(data => {
-        setCourses(data.courses)
-        setFilteredCourses(data.courses.slice(0, perPage))
-      })
+      .then(data => setCourses(data.courses))
       .catch(err => console.error('Ошибка загрузки:', err))
   }, [])
 
-  // Фильтрация курсов
-  useEffect(() => {
+  // Вычисляем отфильтрованные курсы через useMemo 
+  const filteredCourses = useMemo(() => {
     let result = [...courses]
 
     if (search) {
@@ -60,8 +56,16 @@ const CoursesPage = () => {
       result = result.filter(c => c.price <= Number(priceMax))
     }
 
-    setFilteredCourses(result.slice((currentPage - 1) * perPage, currentPage * perPage))
-  }, [courses, search, format, selectedSubjects, priceMin, priceMax, currentPage])
+    return result
+  }, [courses, search, format, selectedSubjects, priceMin, priceMax])
+
+  // Пагинация — тоже через useMemo
+  const paginatedCourses = useMemo(() => {
+    return filteredCourses.slice((currentPage - 1) * perPage, currentPage * perPage)
+  }, [filteredCourses, currentPage, perPage])
+
+  const totalPages = Math.ceil(filteredCourses.length / perPage)
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
   const toggleFavorite = (id) => {
     setFavorites(prev => 
@@ -88,9 +92,6 @@ const CoursesPage = () => {
     setPriceMax('')
     setCurrentPage(1)
   }
-
-  const totalPages = Math.ceil(courses.length / perPage)
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
   return (
     <main className="courses-page">
@@ -170,7 +171,7 @@ const CoursesPage = () => {
 
           <div className="courses-results">
             <div className="courses-list">
-              {filteredCourses.map(course => (
+              {paginatedCourses.map(course => (
                 <article key={course.id} className="course-card">
                   <h3>{course.title}</h3>
                   <p>{course.description}</p>
