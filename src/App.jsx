@@ -3,7 +3,6 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import CoursesPage from './pages/CoursesPage'
-import CoursePage from './pages/CoursePage'
 
 import { orgName } from './data'
 
@@ -16,7 +15,6 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/courses" element={<CoursesPage />} />
-          <Route path="/courses/:id" element={<CoursePage />} />
         </Routes>
         
         <Footer orgName={orgName} />

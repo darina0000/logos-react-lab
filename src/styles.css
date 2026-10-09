@@ -7690,3 +7690,121 @@ html[data-vision-scheme] :where(a, button, input, select, textarea):focus-visibl
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Специфичные стили для модалки отзыва (дополнение к базовым стилям из курсача) */
+
+.review-modal-content {
+  text-align: center;
+}
+
+.review-modal__name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #7cb342;
+  margin: 0 0 16px 0;
+  text-align: left;
+}
+
+.review-modal__meta {
+  font-size: 16px;
+  color: #555;
+  margin: 8px 0;
+  text-align: left;
+}
+
+.review-modal__meta strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.review-modal__text {
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.7;
+  color: #444;
+  margin: 24px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #7cb342;
+  text-align: left;
+}
+
+.ref-button--purple {
+  background: #9c27b0;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 16px;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+.ref-button--purple:hover {
+  background: #7b1fa2;
+  transform: translateY(-2px);
+}
+/* Стили для содержимого модалки отзыва */
+.review-modal-content {
+  text-align: center;
+}
+
+.review-modal__name {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ref-green);
+  margin: 0 0 16px 0;
+  text-align: left;
+}
+
+.review-modal__meta {
+  font-size: 16px;
+  color: #555;
+  margin: 8px 0;
+  text-align: left;
+}
+
+.review-modal__meta strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.review-modal__text {
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.7;
+  color: #444;
+  margin: 24px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid var(--ref-green);
+  text-align: left;
+}
+
+.ref-button--purple {
+  background: var(--ref-purple);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 16px;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(169, 13, 255, 0.3);
+}
+
+.ref-button--purple:hover {
+  background: #8a0bd4;
+  transform: translateY(-2px);
+}

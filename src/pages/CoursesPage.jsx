@@ -177,9 +177,9 @@ const CoursesPage = () => {
                   <p>{course.description}</p>
                   <span>{course.format === 'online' ? 'Онлайн' : 'Офлайн'}</span>
                   <strong>{course.price} BYN</strong>
-                  <Link to={`/courses/${course.id}`} className="course-card__button">
-                    Подробнее
-                  </Link>
+                  <button className="course-card__button" type="button">
+                     В корзину
+                  </button>
                   <button 
                     className={`course-card__favorite favorite-btn ${favorites.includes(course.id) ? 'is-active' : ''}`}
                     onClick={() => toggleFavorite(course.id)}
