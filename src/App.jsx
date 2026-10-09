@@ -1,29 +1,27 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
-import Hero from './components/Hero'
-import Stats from './components/Stats'
-import Parents from './components/Parents'
-import Courses from './components/Courses'
-import Useful from './components/Useful'
-import Teachers from './components/Teachers'
-import Reviews from './components/Reviews'
-import Callout from './components/Callout'
 import Footer from './components/Footer'
-import { orgName, pageTitle, courses, stats } from './data'
+import HomePage from './pages/HomePage'
+import CoursesPage from './pages/CoursesPage'
+import CoursePage from './pages/CoursePage'
+
+import { orgName } from './data'
 
 const App = () => {
   return (
-    <div className="reference-home">
-      <Header orgName={orgName} />
-      <Hero title={pageTitle} />
-      <Stats orgName={orgName} stats={stats} />
-      <Parents />
-      <Courses courses={courses} />
-      <Useful />
-      <Teachers />
-      <Reviews />
-      <Callout />
-      <Footer orgName={orgName} />
-    </div>
+    <BrowserRouter>
+      <div className="reference-home">
+        <Header orgName={orgName} />
+        
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/courses/:id" element={<CoursePage />} />
+        </Routes>
+        
+        <Footer orgName={orgName} />
+      </div>
+    </BrowserRouter>
   )
 }
 
