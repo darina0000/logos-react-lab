@@ -7,7 +7,14 @@ import AddIcon from "@mui/icons-material/Add";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { TextField, FormControl, InputLabel, Select, MenuItem,} from "@mui/material";
+import {
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { Chip } from "@mui/material";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
@@ -342,9 +349,18 @@ const CoursesPage = () => {
                 <article key={course.id} className="course-card">
                   <h3>{course.title}</h3>
                   <p>{course.description}</p>
-                  <span>
-                    {course.format === "online" ? "Онлайн" : "Офлайн"}
-                  </span>
+                  <Chip
+                    label={course.format === "online" ? "Онлайн" : "Офлайн"}
+                    color={course.format === "online" ? "primary" : "secondary"}
+                    size="small"
+                    sx={{
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                      justifySelf: "start",
+                      gridColumn: "1",
+                    }}
+                  />
                   <strong>{course.price} BYN</strong>
 
                   <div className="course-card__actions">
