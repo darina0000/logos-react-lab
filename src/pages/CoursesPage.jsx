@@ -7,13 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { TextField, FormControl, InputLabel, Select, MenuItem,} from "@mui/material";
 import { Chip } from "@mui/material";
 
 const CoursesPage = () => {
