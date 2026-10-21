@@ -1,7 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Breadcrumbs, Typography } from "@mui/material"; // ← ДОБАВИТЬ
+import { Breadcrumbs, Typography } from "@mui/material";
 import Modal from "../components/Modal";
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
@@ -219,16 +224,44 @@ const CoursesPage = () => {
 
         <div className="courses-catalog__head">
           <h1>Каталог курсов</h1>
-          <button className="ref-button ref-button--green" onClick={handleAdd}>
-            + Добавить курс
-          </button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAdd}
+            startIcon={<AddIcon />}
+            sx={{
+              minWidth: 200,
+              minHeight: 46,
+              borderRadius: 999,
+              fontWeight: 700,
+              textTransform: "none",
+            }}
+          >
+            Добавить курс
+          </Button>
         </div>
 
         <div className="courses-catalog__grid">
           <aside className="course-filter-panel">
             <div className="course-filter-panel__head">
               <h2>Фильтры</h2>
-              <button onClick={resetFilters}>Сбросить</button>
+              <Button
+                variant="text"
+                onClick={resetFilters}
+                sx={{
+                  color: "#a90dff",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.15em",
+                  "&:hover": {
+                    backgroundColor: "rgba(169, 13, 255, 0.08)",
+                    color: "#7a00b8",
+                  },
+                }}
+              >
+                Сбросить
+              </Button>
             </div>
 
             <form>
@@ -314,20 +347,20 @@ const CoursesPage = () => {
                   <strong>{course.price} BYN</strong>
 
                   <div className="course-card__actions">
-                    <button
-                      className="course-card__button"
+                    <IconButton
                       onClick={() => handleEdit(course)}
                       title="Редактировать"
+                      sx={{ color: "#666" }}
                     >
-                      ✏️
-                    </button>
-                    <button
-                      className="course-card__button course-card__button--delete"
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
                       onClick={() => handleDelete(course.id)}
                       title="Удалить"
+                      sx={{ color: "#d62020" }}
                     >
-                      🗑️
-                    </button>
+                      <DeleteIcon />
+                    </IconButton>
                   </div>
 
                   <button
@@ -340,16 +373,23 @@ const CoursesPage = () => {
                 </article>
               ))}
             </div>
-
+            {/* Пагинация */}
             <div className="courses-pagination">
               {pages.map((page) => (
-                <button
+                <Button
                   key={page}
-                  className={page === currentPage ? "active" : ""}
+                  variant={page === currentPage ? "contained" : "outlined"}
+                  color={page === currentPage ? "secondary" : "inherit"}
                   onClick={() => setCurrentPage(page)}
+                  sx={{
+                    minWidth: 32,
+                    minHeight: 32,
+                    borderRadius: 1,
+                    border: page === currentPage ? "none" : "1px solid #ddd",
+                  }}
                 >
                   {page}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -435,9 +475,22 @@ const CoursesPage = () => {
               />
             </label>
 
-            <button type="submit" className="ref-button">
+            {/*кнопка "отправить" в модалке*/}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{
+                minHeight: 50,
+                borderRadius: 999,
+                fontWeight: 700,
+                textTransform: "none",
+                mt: 2,
+              }}
+            >
               {editingCourse ? "Сохранить изменения" : "Добавить курс"}
-            </button>
+            </Button>
           </form>
         </Modal>
       </div>
