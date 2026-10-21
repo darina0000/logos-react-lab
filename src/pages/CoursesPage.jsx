@@ -1,11 +1,24 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import {  Breadcrumbs, Typography, Button, IconButton, TextField, FormControl,
-InputLabel, Select, MenuItem, Chip, Tabs, Tab, Box,} from "@mui/material";
+import {
+  Breadcrumbs,
+  Typography,
+  Button,
+  IconButton,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Tabs,
+  Tab,
+  Box,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "../components/Modal";
+import { Chip, Snackbar, Alert } from "@mui/material";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
@@ -28,6 +41,11 @@ const CoursesPage = () => {
 
   const perPage = 6;
   const [activeTab, setActiveTab] = useState(0); // 0 = Все, 1 = Онлайн, 2 = Офлайн
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const subjects = [
     { id: "math", name: "Математика" },
@@ -149,6 +167,12 @@ const CoursesPage = () => {
   const handleDelete = (id) => {
     if (confirm("Удалить курс?")) {
       setCourses(courses.filter((c) => c.id !== id));
+
+      setSnackbar({
+        open: true,
+        message: "Курс удалён",
+        severity: "warning",
+      });
     }
   };
 
@@ -185,6 +209,13 @@ const CoursesPage = () => {
       price: 0,
       format: "offline",
       schedule: "",
+    });
+    setSnackbar({
+      open: true,
+      message: editingCourse
+        ? "Курс успешно обновлён!"
+        : "Курс успешно добавлен!",
+      severity: "success",
     });
   };
 
@@ -513,6 +544,20 @@ const CoursesPage = () => {
             </Button>
           </form>
         </Modal>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={3000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        >
+          <Alert
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+            severity={snackbar.severity}
+            sx={{ width: "100%" }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </div>
     </main>
   );
