@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 const Courses = ({ courses }) => {
   return (
     <section className="ref-band ref-courses" id="courses">
@@ -20,7 +21,9 @@ const Courses = ({ courses }) => {
               </article>
             ))}
             
-            <a className="ref-button" href="courses.html">Смотреть все курсы</a>
+           <Link className="ref-button" to="/courses">
+              Смотреть все курсы
+            </Link>
           </div>
           
           <aside className="ref-test-card">

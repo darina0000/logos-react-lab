@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import CoursesPage from './pages/CoursesPage'
 import TeachersPage from './pages/TeachersPage'
+import NotFound from './pages/NotFound' 
 
 import { orgName } from './data'
 
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/teachers" element={<TeachersPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         
         <Footer orgName={orgName} />

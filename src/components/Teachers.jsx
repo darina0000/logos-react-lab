@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 const Teachers = () => {
   return (
     <section className="ref-band ref-teacher" id="teachers">
@@ -38,7 +39,11 @@ const Teachers = () => {
               </div>
             </div>
 
-            <a className="ref-button" href="teachers.html">Подробнее</a>
+            <div className="ref-teacher__actions">
+              <Link to="/teachers" className="ref-button">
+             Все преподаватели 
+              </Link>
+            </div>
           </div>
 
         </div>

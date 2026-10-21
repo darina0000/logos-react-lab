@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import Modal from '../components/Modal'
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([])
@@ -10,6 +11,16 @@ const CoursesPage = () => {
   const [priceMin, setPriceMin] = useState('')
   const [priceMax, setPriceMax] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [editingCourse, setEditingCourse] = useState(null)
+  const [formData, setFormData] = useState({
+    title: '',
+    subject: 'math',
+    description: '',
+    price: 0,
+    format: 'offline',
+    schedule: ''
+  })
   const perPage = 6
 
   const subjects = [
@@ -31,7 +42,7 @@ const CoursesPage = () => {
       .catch(err => console.error('Ошибка загрузки:', err))
   }, [])
 
-  // Вычисляем отфильтрованные курсы через useMemo 
+  // Фильтрация курсов
   const filteredCourses = useMemo(() => {
     let result = [...courses]
 
@@ -59,7 +70,7 @@ const CoursesPage = () => {
     return result
   }, [courses, search, format, selectedSubjects, priceMin, priceMax])
 
-  // Пагинация — тоже через useMemo
+  // Пагинация
   const paginatedCourses = useMemo(() => {
     return filteredCourses.slice((currentPage - 1) * perPage, currentPage * perPage)
   }, [filteredCourses, currentPage, perPage])
@@ -67,6 +78,7 @@ const CoursesPage = () => {
   const totalPages = Math.ceil(filteredCourses.length / perPage)
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
+  // Переключение избранного
   const toggleFavorite = (id) => {
     setFavorites(prev => 
       prev.includes(id) 
@@ -75,6 +87,7 @@ const CoursesPage = () => {
     )
   }
 
+  // Переключение предмета (множественный выбор)
   const toggleSubject = (subjectId) => {
     setSelectedSubjects(prev => 
       prev.includes(subjectId)
@@ -84,6 +97,7 @@ const CoursesPage = () => {
     setCurrentPage(1)
   }
 
+  // Сброс фильтров
   const resetFilters = () => {
     setSearch('')
     setFormat('any')
@@ -91,6 +105,67 @@ const CoursesPage = () => {
     setPriceMin('')
     setPriceMax('')
     setCurrentPage(1)
+  }
+
+  // Открыть модалку для добавления
+  const handleAdd = () => {
+    setEditingCourse(null)
+    setFormData({ title: '', subject: 'math', description: '', price: 0, format: 'offline', schedule: '' })
+    setIsModalOpen(true)
+  }
+
+  // Открыть модалку для редактирования
+  const handleEdit = (course) => {
+    setEditingCourse(course)
+    setFormData({
+      title: course.title,
+      subject: course.subject,
+      description: course.description,
+      price: course.price,
+      format: course.format,
+      schedule: course.schedule
+    })
+    setIsModalOpen(true)
+  }
+
+  // Удалить курс
+  const handleDelete = (id) => {
+    if (confirm('Удалить курс?')) {
+      setCourses(courses.filter(c => c.id !== id))
+    }
+  }
+
+  // Сохранить курс (добавление или редактирование)
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
+    
+    if (editingCourse) {
+      // Редактирование существующего курса
+      setCourses(courses.map(c => 
+        c.id === editingCourse.id 
+          ? { ...c, ...formData, price: Number(formData.price) }
+          : c
+      ))
+    } else {
+      // Добавление нового курса
+      const newCourse = {
+        id: Math.max(...courses.map(c => c.id)) + 1,
+        ...formData,
+        price: Number(formData.price),
+        teacherId: 101,
+        image: 'https://images.unsplash.com/photo-1509869175650-a1d97972541a?auto=format&fit=crop&w=900&q=80'
+      }
+      setCourses([...courses, newCourse])
+    }
+    
+    setIsModalOpen(false)
+    setEditingCourse(null)
+    setFormData({ title: '', subject: 'math', description: '', price: 0, format: 'offline', schedule: '' })
+  }
+
+  // Изменение полей формы
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   return (
@@ -103,7 +178,12 @@ const CoursesPage = () => {
           <strong>Каталог</strong>
         </div>
 
-        <h1>Каталог курсов</h1>
+        <div className="courses-catalog__head">
+          <h1>Каталог курсов</h1>
+          <button className="ref-button ref-button--green" onClick={handleAdd}>
+            + Добавить курс
+          </button>
+        </div>
 
         <div className="courses-catalog__grid">
           
@@ -177,9 +257,24 @@ const CoursesPage = () => {
                   <p>{course.description}</p>
                   <span>{course.format === 'online' ? 'Онлайн' : 'Офлайн'}</span>
                   <strong>{course.price} BYN</strong>
-                  <button className="course-card__button" type="button">
-                     В корзину
-                  </button>
+                  
+                  <div className="course-card__actions">
+                    <button 
+                      className="course-card__button"
+                      onClick={() => handleEdit(course)}
+                      title="Редактировать"
+                    >
+                      ✏️
+                    </button>
+                    <button 
+                      className="course-card__button course-card__button--delete"
+                      onClick={() => handleDelete(course.id)}
+                      title="Удалить"
+                    >
+                      🗑️
+                    </button>
+                  </div>
+
                   <button 
                     className={`course-card__favorite favorite-btn ${favorites.includes(course.id) ? 'is-active' : ''}`}
                     onClick={() => toggleFavorite(course.id)}
@@ -205,6 +300,83 @@ const CoursesPage = () => {
           </div>
 
         </div>
+
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title={editingCourse ? 'Редактировать курс' : 'Добавить курс'}
+        >
+          <form onSubmit={handleFormSubmit} className="course-form">
+            <label>
+              Название:
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                required
+                placeholder="Введите название курса"
+              />
+            </label>
+
+            <label>
+              Предмет:
+              <select name="subject" value={formData.subject} onChange={handleInputChange}>
+                {subjects.map(subject => (
+                  <option key={subject.id} value={subject.id}>{subject.name}</option>
+                ))}
+              </select>
+            </label>
+
+            <label>
+              Описание:
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                required
+                placeholder="Введите описание курса"
+              />
+            </label>
+
+            <label>
+              Цена (BYN):
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                required
+                min="0"
+              />
+            </label>
+
+            <label>
+              Формат:
+              <select name="format" value={formData.format} onChange={handleInputChange}>
+                <option value="offline">Офлайн</option>
+                <option value="online">Онлайн</option>
+              </select>
+            </label>
+
+            <label>
+              Расписание:
+              <input
+                type="text"
+                name="schedule"
+                value={formData.schedule}
+                onChange={handleInputChange}
+                required
+                placeholder="Например: Пн/Ср 18:00"
+              />
+            </label>
+
+            <button type="submit" className="ref-button">
+              {editingCourse ? 'Сохранить изменения' : 'Добавить курс'}
+            </button>
+          </form>
+        </Modal>
+
       </div>
     </main>
   )
