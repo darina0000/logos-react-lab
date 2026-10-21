@@ -1,20 +1,16 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Breadcrumbs, Typography } from "@mui/material";
-import Modal from "../components/Modal";
-import { Button } from "@mui/material";
+import {  Breadcrumbs, Typography, Button, IconButton, TextField, FormControl,
+InputLabel, Select, MenuItem, Chip, Tabs, Tab, Box,} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { TextField, FormControl, InputLabel, Select, MenuItem,} from "@mui/material";
-import { Chip } from "@mui/material";
+import Modal from "../components/Modal";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [search, setSearch] = useState("");
-  const [format, setFormat] = useState("any");
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
@@ -29,7 +25,9 @@ const CoursesPage = () => {
     format: "offline",
     schedule: "",
   });
+
   const perPage = 6;
+  const [activeTab, setActiveTab] = useState(0); // 0 = Все, 1 = Онлайн, 2 = Офлайн
 
   const subjects = [
     { id: "math", name: "Математика" },
@@ -60,8 +58,11 @@ const CoursesPage = () => {
       );
     }
 
-    if (format !== "any") {
-      result = result.filter((c) => c.format === format);
+    // ИЗМЕНЕНО: фильтрация по активной вкладке вместо старого format
+    if (activeTab === 1) {
+      result = result.filter((c) => c.format === "online");
+    } else if (activeTab === 2) {
+      result = result.filter((c) => c.format === "offline");
     }
 
     if (selectedSubjects.length > 0) {
@@ -76,7 +77,7 @@ const CoursesPage = () => {
     }
 
     return result;
-  }, [courses, search, format, selectedSubjects, priceMin, priceMax]);
+  }, [courses, search, activeTab, selectedSubjects, priceMin, priceMax]);
 
   // Пагинация
   const paginatedCourses = useMemo(() => {
@@ -109,7 +110,7 @@ const CoursesPage = () => {
   // Сброс фильтров
   const resetFilters = () => {
     setSearch("");
-    setFormat("any");
+    setActiveTab(0); // ИЗМЕНЕНО: сбрасываем вкладку на "Все"
     setSelectedSubjects([]);
     setPriceMin("");
     setPriceMax("");
@@ -156,7 +157,6 @@ const CoursesPage = () => {
     e.preventDefault();
 
     if (editingCourse) {
-      // Редактирование существующего курса
       setCourses(
         courses.map((c) =>
           c.id === editingCourse.id
@@ -165,9 +165,8 @@ const CoursesPage = () => {
         ),
       );
     } else {
-      // Добавление нового курса
       const newCourse = {
-        id: Math.max(...courses.map((c) => c.id)) + 1,
+        id: Math.max(...courses.map((c) => c.id), 0) + 1,
         ...formData,
         price: Number(formData.price),
         teacherId: 101,
@@ -224,6 +223,29 @@ const CoursesPage = () => {
           </Typography>
         </Breadcrumbs>
 
+        {/* Вкладки MUI Tabs для переключения формата */}
+        <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 3 }}>
+          <Tabs
+            value={activeTab}
+            onChange={(e, newValue) => {
+              setActiveTab(newValue);
+              setCurrentPage(1);
+            }}
+            sx={{
+              "& .MuiTab-root": {
+                textTransform: "none",
+                fontWeight: 700,
+                fontSize: 16,
+                minWidth: 120,
+              },
+            }}
+          >
+            <Tab label="Все курсы" />
+            <Tab label="Онлайн" />
+            <Tab label="Офлайн" />
+          </Tabs>
+        </Box>
+
         <div className="courses-catalog__head">
           <h1>Каталог курсов</h1>
           <Button
@@ -277,21 +299,6 @@ const CoursesPage = () => {
                     setCurrentPage(1);
                   }}
                 />
-              </div>
-
-              <div className="course-select">
-                <span>Формат обучения</span>
-                <select
-                  value={format}
-                  onChange={(e) => {
-                    setFormat(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                >
-                  <option value="any">Любой</option>
-                  <option value="offline">Офлайн</option>
-                  <option value="online">Онлайн</option>
-                </select>
               </div>
 
               <div className="course-subjects">
@@ -384,6 +391,7 @@ const CoursesPage = () => {
                 </article>
               ))}
             </div>
+
             {/* Пагинация */}
             <div className="courses-pagination">
               {pages.map((page) => (
@@ -424,7 +432,6 @@ const CoursesPage = () => {
               variant="outlined"
               fullWidth
             />
-
             <TextField
               label="Цена (BYN)"
               name="price"
@@ -436,7 +443,6 @@ const CoursesPage = () => {
               variant="outlined"
               fullWidth
             />
-
             <TextField
               label="Расписание"
               name="schedule"
@@ -447,7 +453,6 @@ const CoursesPage = () => {
               variant="outlined"
               fullWidth
             />
-
             <TextField
               label="Описание курса"
               name="description"
@@ -460,7 +465,6 @@ const CoursesPage = () => {
               fullWidth
             />
 
-            {/* Предмет — MUI Select */}
             <FormControl fullWidth required>
               <InputLabel id="subject-label">Предмет</InputLabel>
               <Select
@@ -478,7 +482,6 @@ const CoursesPage = () => {
               </Select>
             </FormControl>
 
-            {/* Формат — MUI Select */}
             <FormControl fullWidth required>
               <InputLabel id="format-label">Формат обучения</InputLabel>
               <Select
