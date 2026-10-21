@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { TextField, FormControl, InputLabel, Select, MenuItem,} from "@mui/material";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
@@ -400,82 +401,88 @@ const CoursesPage = () => {
           onClose={() => setIsModalOpen(false)}
           title={editingCourse ? "Редактировать курс" : "Добавить курс"}
         >
-          <form onSubmit={handleFormSubmit} className="course-form">
-            <label>
-              Название:
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                required
-                placeholder="Введите название курса"
-              />
-            </label>
+          <form
+            onSubmit={handleFormSubmit}
+            style={{ display: "grid", gap: "16px", marginTop: "16px" }}
+          >
+            <TextField
+              label="Название курса"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+              required
+              variant="outlined"
+              fullWidth
+            />
 
-            <label>
-              Предмет:
-              <select
+            <TextField
+              label="Цена (BYN)"
+              name="price"
+              type="number"
+              value={formData.price}
+              onChange={handleInputChange}
+              required
+              inputProps={{ min: 0 }}
+              variant="outlined"
+              fullWidth
+            />
+
+            <TextField
+              label="Расписание"
+              name="schedule"
+              value={formData.schedule}
+              onChange={handleInputChange}
+              required
+              placeholder="Например: Пн/Ср 18:00"
+              variant="outlined"
+              fullWidth
+            />
+
+            <TextField
+              label="Описание курса"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              required
+              multiline
+              rows={4}
+              variant="outlined"
+              fullWidth
+            />
+
+            {/* Предмет — MUI Select */}
+            <FormControl fullWidth required>
+              <InputLabel id="subject-label">Предмет</InputLabel>
+              <Select
+                labelId="subject-label"
                 name="subject"
                 value={formData.subject}
+                label="Предмет"
                 onChange={handleInputChange}
               >
                 {subjects.map((subject) => (
-                  <option key={subject.id} value={subject.id}>
+                  <MenuItem key={subject.id} value={subject.id}>
                     {subject.name}
-                  </option>
+                  </MenuItem>
                 ))}
-              </select>
-            </label>
+              </Select>
+            </FormControl>
 
-            <label>
-              Описание:
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                required
-                placeholder="Введите описание курса"
-              />
-            </label>
-
-            <label>
-              Цена (BYN):
-              <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleInputChange}
-                required
-                min="0"
-              />
-            </label>
-
-            <label>
-              Формат:
-              <select
+            {/* Формат — MUI Select */}
+            <FormControl fullWidth required>
+              <InputLabel id="format-label">Формат обучения</InputLabel>
+              <Select
+                labelId="format-label"
                 name="format"
                 value={formData.format}
+                label="Формат обучения"
                 onChange={handleInputChange}
               >
-                <option value="offline">Офлайн</option>
-                <option value="online">Онлайн</option>
-              </select>
-            </label>
+                <MenuItem value="offline">Офлайн</MenuItem>
+                <MenuItem value="online">Онлайн</MenuItem>
+              </Select>
+            </FormControl>
 
-            <label>
-              Расписание:
-              <input
-                type="text"
-                name="schedule"
-                value={formData.schedule}
-                onChange={handleInputChange}
-                required
-                placeholder="Например: Пн/Ср 18:00"
-              />
-            </label>
-
-            {/*кнопка "отправить" в модалке*/}
             <Button
               type="submit"
               variant="contained"
@@ -486,7 +493,7 @@ const CoursesPage = () => {
                 borderRadius: 999,
                 fontWeight: 700,
                 textTransform: "none",
-                mt: 2,
+                mt: 1,
               }}
             >
               {editingCourse ? "Сохранить изменения" : "Добавить курс"}
