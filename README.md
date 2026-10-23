@@ -1,16 +1,57 @@
-# React + Vite
+# Лабораторная работа №3 — Стилизация с использованием библиотеки компонентов
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание
 
-Currently, two official plugins are available:
+В данной лабораторной работе для стилизации приложения была выбрана библиотека **Material UI (MUI)** — одна из самых популярных React-библиотек компонентов, основанная на принципах Material Design от Google.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Использованные компоненты Material UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+В проекте использовано **20 компонентов** библиотеки Material UI:
 
-## Expanding the ESLint configuration
+| № | Компонент | Описание использования |
+|---|-----------|------------------------|
+| 1 | `ThemeProvider` | Обёртка всего приложения для применения единой темы |
+| 2 | `CssBaseline` | Сброс стилей браузера (нормализация) |
+| 3 | `Breadcrumbs` | Хлебные крошки на странице каталога курсов |
+| 4 | `Typography` | Текстовые элементы в хлебных крошках и заголовках |
+| 5 | `Button` | Кнопки действий (добавить курс, пагинация, сброс фильтров, отправка формы) |
+| 6 | `IconButton` | Кнопки с иконками (редактирование, удаление курсов) |
+| 7 | `Tooltip` | Всплывающие подсказки для кнопок с иконками |
+| 8 | `TextField` | Поля ввода в форме добавления/редактирования курса |
+| 9 | `FormControl` | Обёртка для элементов формы (Select) |
+| 10 | `InputLabel` | Плавающие лейблы для полей Select |
+| 11 | `Select` | Выпадающие списки (предмет, формат обучения) |
+| 12 | `MenuItem` | Пункты выпадающих списков |
+| 13 | `Chip` | Метки формата курса (Онлайн/Офлайн) на карточках |
+| 14 | `Tabs` | Вкладки для переключения между категориями курсов |
+| 15 | `Tab` | Отдельная вкладка в компоненте Tabs |
+| 16 | `Box` | Контейнер для группировки элементов (вкладки) |
+| 17 | `Avatar` | Фотографии преподавателей на странице TeachersPage |
+| 18 | `Snackbar` | Всплывающие уведомления о действиях пользователя |
+| 19 | `Alert` | Сообщения внутри Snackbar (успех/предупреждение) |
+| 20 | `CircularProgress` | Индикатор загрузки в виде крутящегося спиннера |
+| 21 | `Backdrop` | Затемнение фона при отображении индикатора загрузки |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Использованные иконки Material Icons
+
+| Иконка | Назначение |
+|--------|------------|
+| `AddIcon` | Кнопка добавления курса |
+| `EditIcon` | Кнопка редактирования курса |
+| `DeleteIcon` | Кнопка удаления курса |
+| `NavigateBeforeIcon` | Стрелка "назад" в карусели преподавателей |
+| `NavigateNextIcon` | Стрелка "вперёд" в карусели преподавателей |
+
+---
+
+## Новые функции приложения (по сравнению с лабой №2)
+
+1. **Вкладки (Tabs)** — фильтрация курсов по формату (Все/Онлайн/Офлайн)
+2. **Уведомления (Snackbar + Alert)** — информирование пользователя при добавлении, редактировании и удалении курсов
+3. **Индикатор загрузки (CircularProgress + Backdrop)** — визуальная обратная связь при загрузке данных из JSON
+4. **Единая тема оформления** — все компоненты стилизованы через ThemeProvider с фирменными цветами центра "Логос"
+
