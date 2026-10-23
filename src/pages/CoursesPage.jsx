@@ -19,6 +19,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "../components/Modal";
 import { Chip, Snackbar, Alert } from "@mui/material";
+import { CircularProgress, Backdrop } from '@mui/material';
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
@@ -58,12 +59,24 @@ const CoursesPage = () => {
     { id: "social", name: "Обществоведение" },
   ];
 
+  const [isLoading, setIsLoading] = useState(true);
   // Загрузка курсов из JSON
   useEffect(() => {
-    fetch("/data/db.json")
-      .then((res) => res.json())
-      .then((data) => setCourses(data.courses))
-      .catch((err) => console.error("Ошибка загрузки:", err));
+    // задержка 2 секунды для теста
+    const timer = setTimeout(() => {
+      fetch("/data/db.json")
+        .then((res) => res.json())
+        .then((data) => {
+          setCourses(data.courses);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error("Ошибка загрузки:", err);
+          setIsLoading(false);
+        });
+    }, 2000); 
+
+    return () => clearTimeout(timer); // Очистка таймера
   }, []);
 
   // Фильтрация курсов
@@ -558,6 +571,13 @@ const CoursesPage = () => {
             {snackbar.message}
           </Alert>
         </Snackbar>
+                {/* Индикатор загрузки */}
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <CircularProgress color="primary" size={60} />
+        </Backdrop>
       </div>
     </main>
   );
